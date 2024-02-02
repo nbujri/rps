@@ -12,7 +12,10 @@ choices.forEach((choice) => {
 
 // start game
 const startBtn = document.querySelector(".startBtn");
-startBtn.addEventListener("click", () => {
+startBtn.addEventListener("click", startGame);
+
+// starts game
+function startGame() {
   const selectionBtns = document.querySelector(".selectionBtns");
 
   // toggle visibility
@@ -22,9 +25,9 @@ startBtn.addEventListener("click", () => {
   // reset score when playing again
   playerScore = 0;
   computerScore = 0;
-});
+}
 
-// returns rock, paper, or scissor
+// returns rock, paper, or scissor for computer player
 function getComputerChoice() {
   const random = Math.floor(Math.random() * 3);
   console.log(random);
