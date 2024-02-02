@@ -1,3 +1,29 @@
+// score tracker
+let playerScore = 0;
+let computerScore = 0;
+
+// selection buttons
+const choices = document.querySelectorAll(".choice");
+choices.forEach((choice) => {
+  choice.addEventListener("click", () => {
+    console.log(choice.textContent);
+  });
+});
+
+// start game
+const startBtn = document.querySelector(".startBtn");
+startBtn.addEventListener("click", () => {
+  const selectionBtns = document.querySelector(".selectionBtns");
+
+  // toggle visibility
+  startBtn.classList.toggle("hide");
+  selectionBtns.classList.toggle("hide");
+
+  // reset score when playing again
+  playerScore = 0;
+  computerScore = 0;
+});
+
 // returns rock, paper, or scissor
 function getComputerChoice() {
   const random = Math.floor(Math.random() * 3);
@@ -54,24 +80,4 @@ function playRound() {
     console.log(`round won! ${playerSelection} beats ${computerSelection}.`);
     return true;
   }
-}
-
-// play to the best of five
-function game() {
-  let playerScore = 0;
-  let computerScore = 0;
-
-  while (playerScore < 3 && computerScore < 3) {
-    let playerWin = playRound();
-
-    playerWin ? playerScore++ : computerScore++;
-
-    console.log(
-      `player score: ${playerScore}\ncomputer score: ${computerScore}`
-    );
-  }
-
-  playerScore > computerScore
-    ? alert("congratulations! you win!")
-    : alert("game over. you lose.");
 }
