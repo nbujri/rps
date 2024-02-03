@@ -8,7 +8,29 @@ choices.forEach((choice) => {
   choice.addEventListener("click", () => {
     console.log(choice);
 
-    playRound(choice);
+    const playerWin = playRound(choice);
+
+    if (playerWin !== "tie") {
+      playerWin ? (playerScore += 1) : (computerScore += 1);
+    }
+
+    // display scores
+    const playerScoreDisplay = document.querySelector(".playerScore");
+    const computerScoreDisplay = document.querySelector(".computerScore");
+    playerScoreDisplay.textContent = playerScore;
+    computerScoreDisplay.textContent = computerScore;
+
+    if (playerScore === 3 || computerScore === 3) {
+      const resultDisplay = document.querySelector(".roundResult");
+
+      if (playerScore > computerScore) {
+        resultDisplay.textContent = "Congratulations! You Win!";
+      } else {
+        resultDisplay.textContent = "You Lose";
+      }
+
+      resetGame();
+    }
   });
 });
 
@@ -18,10 +40,28 @@ startBtn.addEventListener("click", startGame);
 
 // starts game
 function startGame() {
+  // get ui elements
+  const selectionBtns = document.querySelector(".selectionBtns");
+  const playerScoreDisplay = document.querySelector(".playerScore");
+  const computerScoreDisplay = document.querySelector(".computerScore");
+  const resultDisplay = document.querySelector(".roundResult");
+
+  // toggle visibility
+  startBtn.classList.toggle("hide");
+  selectionBtns.classList.toggle("hide");
+
+  playerScoreDisplay.textContent = playerScore;
+  computerScoreDisplay.textContent = computerScore;
+  resultDisplay.textContent = "";
+}
+
+function resetGame() {
+  // get ui elements
   const selectionBtns = document.querySelector(".selectionBtns");
 
   // toggle visibility
   startBtn.classList.toggle("hide");
+  startBtn.textContent = "Play Again";
   selectionBtns.classList.toggle("hide");
 
   // reset score when playing again
@@ -68,6 +108,7 @@ function playRound(choice) {
   // tie condition
   if (playerSelection === computerSelection[0]) {
     resultDisplay.textContent = "tie!";
+    return "tie";
   }
   // lose conditions
   else if (playerSelection === "rock" && computerSelection[0] === "paper") {
